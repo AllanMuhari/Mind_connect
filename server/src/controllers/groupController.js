@@ -4,14 +4,14 @@ const prisma = new PrismaClient();
 
 export const createGroup = async (req, res) => {
   try {
-    const { name, desciprtion } = req.body;
+    const { name, description } = req.body;
     const group = await prisma.group.create({
       data: {
         name,
-        desciprtion,
+        description,
         members: {
           connect: {
-            id: req.user.id,
+            id: req.user.userId,
           },
         },
       },
@@ -28,13 +28,15 @@ export const getGroups = async (req, res) => {
       where: {
         members: {
           some: {
-            id: req.user.id,
+            id: req.user.userId,
           },
         },
+    
       },
     });
+    res.status(200).json(groups);
   } catch (error) {
-    res.status(500).json({ error: " Failed to get " });
+    res.status(500).json({ error: "Failed to get groups" });
   }
 };
 
@@ -45,11 +47,20 @@ export const getGroupById = async (req, res) => {
       where: {
         id: id,
       },
+      include: {
+        members: true,
+      },
     });
+    if (!group) {
+      return res.status(404).json({ error: "Group not found" });
+    }
+    res.status(200).json(group);
   } catch (error) {
+    console.error(error);
     res.status(500).json({ error: "Failed to get group" });
   }
 };
+
 export const deleteGroup = async (req, res) => {
   try {
     const id = req.params.id;
@@ -60,7 +71,8 @@ export const deleteGroup = async (req, res) => {
     });
     res.status(200).json({ message: "Group deleted" });
   } catch (error) {
-    res.status(500).json({ error: "Failed to deleted group" });
+    console.error(error);
+    res.status(500).json({ error: "Failed to delete group" });
   }
 };
 
@@ -77,8 +89,9 @@ export const updateGroup = async (req, res) => {
         description,
       },
     });
-    res.status(200).json({ message: "Group updated" });
+    res.status(200).json({ message: "Group updated", group });
   } catch (error) {
+    console.error(error);
     res.status(500).json({ error: "Failed to update group" });
   }
 };
