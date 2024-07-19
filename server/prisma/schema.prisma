@@ -1,0 +1,106 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+model User {
+  id        String   @id @default(uuid())
+  email          String         @unique
+  password       String
+  role           Role
+  profile        Profile?
+  groups         Group[]        @relation("UserGroups")
+  sessions       Session[]      @relation("UserSessions")
+  counselorSessions Session[]   @relation("CounselorSessions")
+  sentMessages   Message[]      @relation("SentMessages")
+  receivedMessages Message[]    @relation("ReceivedMessages")
+  notifications  Notification[]
+
+  @@map("users")
+}
+
+model Profile {
+ id        String   @id @default(uuid())
+  userId    String    @unique
+  firstName String?
+  lastName  String?
+  bio       String?
+  user      User   @relation(fields: [userId], references: [id])
+
+  @@map("profiles")
+}
+
+model Group {
+   id        String   @id @default(uuid())
+  name        String
+  description String
+  members     User[] @relation("UserGroups")
+
+  @@map("groups")
+}
+
+model Session {
+ id        String   @id @default(uuid())
+  userId       String
+  counselorId  String
+  date         DateTime
+  status       SessionStatus
+  user         User           @relation("UserSessions", fields: [userId], references: [id])
+  counselor    User           @relation("CounselorSessions", fields: [counselorId], references: [id])
+
+  @@map("sessions")
+}
+
+model Resource {
+ id        String   @id @default(uuid())
+  title       String
+  url         String
+  description String?
+
+  @@map("resources")
+}
+
+model Message {
+   id        String   @id @default(uuid())
+  senderId    String
+  receiverId  String // Change the type to String
+  content     String
+  timestamp   DateTime @default(now())
+  sender      User     @relation("SentMessages", fields: [senderId], references: [id])
+  receiver    User     @relation("ReceivedMessages", fields: [receiverId], references: [id])
+
+  @@map("messages")
+}
+
+model Notification {
+ id        String   @id @default(uuid())
+  userId    String
+  message   String
+  read      Boolean  @default(false)
+  user      User     @relation(fields: [userId], references: [id])
+
+  @@map("notifications")
+}
+
+enum Role {
+  USER
+  COUNSELOR
+  ADMIN
+}
+
+enum SessionStatus {
+  PENDING
+  CONFIRMED
+  CANCELED
+  COMPLETED
+}
