@@ -64,7 +64,7 @@ const Signup = () => {
           className="w-full p-2 border border-gray-300 rounded mb-4"
           required>
           <option value="User">User</option>
-          <option value="Therapist">Therapist</option>
+          <option value="Therapist">counsellor</option>
         </select>
         <button
           type="submit"

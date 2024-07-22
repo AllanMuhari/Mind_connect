@@ -20,6 +20,7 @@ model User {
   role              Role
   username          String   @unique
   profilePhoto      String?
+  approved  Boolean  @default(false)
   profile           Profile?
   groups            Group[]        @relation("UserGroups")
   sessions          Session[]      @relation("UserSessions")
