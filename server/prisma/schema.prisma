@@ -8,49 +8,51 @@ generator client {
   provider = "prisma-client-js"
 }
 
-
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
 model User {
-  id        String   @id @default(uuid())
-  email          String         @unique
-  password       String
-  role           Role
-  profile        Profile?
-  groups         Group[]        @relation("UserGroups")
-  sessions       Session[]      @relation("UserSessions")
-  counselorSessions Session[]   @relation("CounselorSessions")
-  sentMessages   Message[]      @relation("SentMessages")
-  receivedMessages Message[]    @relation("ReceivedMessages")
-  notifications  Notification[]
+  id                String   @id @default(uuid())
+  email             String   @unique
+  password          String
+  role              Role
+  username          String   @unique
+  profilePhoto      String?
+  profile           Profile?
+  groups            Group[]        @relation("UserGroups")
+  sessions          Session[]      @relation("UserSessions")
+  counselorSessions Session[]      @relation("CounselorSessions")
+  sentMessages      Message[]      @relation("SentMessages")
+  receivedMessages  Message[]      @relation("ReceivedMessages")
+  notifications     Notification[]
 
   @@map("users")
 }
 
 model Profile {
- id        String   @id @default(uuid())
-  userId    String    @unique
+  id        String   @id @default(uuid())
+  userId    String   @unique
   firstName String?
   lastName  String?
   bio       String?
-  user      User   @relation(fields: [userId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
 
   @@map("profiles")
 }
 
 model Group {
-   id        String   @id @default(uuid())
+  id          String   @id @default(uuid())
   name        String
   description String
-  members     User[] @relation("UserGroups")
+  members     User[]   @relation("UserGroups")
 
   @@map("groups")
 }
 
 model Session {
- id        String   @id @default(uuid())
+  id           String   @id @default(uuid())
   userId       String
   counselorId  String
   date         DateTime
@@ -62,7 +64,7 @@ model Session {
 }
 
 model Resource {
- id        String   @id @default(uuid())
+  id          String   @id @default(uuid())
   title       String
   url         String
   description String?
@@ -71,9 +73,9 @@ model Resource {
 }
 
 model Message {
-   id        String   @id @default(uuid())
+  id          String   @id @default(uuid())
   senderId    String
-  receiverId  String // Change the type to String
+  receiverId  String
   content     String
   timestamp   DateTime @default(now())
   sender      User     @relation("SentMessages", fields: [senderId], references: [id])
@@ -83,11 +85,11 @@ model Message {
 }
 
 model Notification {
- id        String   @id @default(uuid())
-  userId    String
-  message   String
-  read      Boolean  @default(false)
-  user      User     @relation(fields: [userId], references: [id])
+  id          String   @id @default(uuid())
+  userId      String
+  message     String
+  read        Boolean  @default(false)
+  user        User     @relation(fields: [userId], references: [id])
 
   @@map("notifications")
 }
