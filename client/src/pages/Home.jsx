@@ -8,9 +8,6 @@ import TrustedBySection from "../components/TrustedBySection";
 import Footer from "../components/Footer";
 
 const Home = () => {
-  const isAuthenticated = false; // Replace with actual auth logic
-  const user = null; // Replace with actual user data
-
   return (
     <div>
       <main>
