@@ -21,6 +21,7 @@ const Login = () => {
           password,
         }
       );
+
       setUser(response.data);
       navigate("/");
     } catch (error) {

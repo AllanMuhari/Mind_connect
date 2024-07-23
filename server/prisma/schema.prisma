@@ -31,17 +31,21 @@ enum UserRole {
 }
 
 model Counselor {
-  id        String          @id @default(uuid())
-  userId    String          @unique
-  user      User            @relation(fields: [userId], references: [id])
-  approved  Boolean         @default(false)
-  createdAt DateTime        @default(now())
-  updatedAt DateTime        @updatedAt
+  id        String   @id @default(uuid())
+  userId    String   @unique
+  user      User     @relation(fields: [userId], references: [id])
+  approved  Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
   sessions  BookedSession[]
   image     String?
+  phoneNumber String?  // New field
+  email       String?  // New field
+  experience  Int?     // New field
 
   @@map("counselors")
 }
+
 
 model BookedSession {
   id             String       @id @default(uuid())

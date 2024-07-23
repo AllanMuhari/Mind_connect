@@ -85,7 +85,7 @@ const Header = () => {
               Home
             </NavLink>
             {user?.role === "ADMIN" && (
-              <NavLink to="/approve-counsellors" onClick={toggleMenu}>
+              <NavLink to="/admin" onClick={toggleMenu}>
                 Approve Counsellors
               </NavLink>
             )}

@@ -6,7 +6,8 @@ import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import BookedSessions from "./components/BookedSessions";
 import FindTherapists from "./components/FindCounselors";
-
+import WaitingApproval from "./components/WaitingApproval";
+import Admin from "./components/Admin";
 const App = () => {
   return (
     <Router>
@@ -17,6 +18,8 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/booked-sessions" component={BookedSessions} />
         <Route path="/counsellors" component={FindTherapists} />
+        <Route path="/waiting-approval" element={<WaitingApproval />} />
+        <Route path="/admin" element={<Admin />} />
       </Routes>
     </Router>
   );
