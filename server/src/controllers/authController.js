@@ -43,7 +43,6 @@ export const registerUser = async (req, res) => {
       await prisma.counselor.create({
         data: {
           userId: user.id,
-          approved: false
         },
       });
     }
@@ -69,7 +68,9 @@ export const loginUser = async (req, res) => {
         .json({ error: "Please provide email and password" });
     }
 
-    const user = await prisma.user.findUnique({ where: { email } });
+    const user = await prisma.user.findUnique({
+      where: { email },
+    });
 
     if (!user) {
       return res.status(401).json({ error: "Email does not exist" });
@@ -100,8 +101,12 @@ export const loginUser = async (req, res) => {
 export const getUserProfile = async (req, res) => {
   try {
     const user = await prisma.user.findUnique({
-      where: { id: req.user.userId },
-      include: { counselor: true },
+      where: {
+        id: req.user.userId,
+      },
+      include: {
+        counselor: true, // Include counselor information if the user is a counselor
+      },
     });
     if (!user) {
       return res.status(404).json({ error: "User not found" });

@@ -63,7 +63,6 @@ export const updateCounselorProfile = async (req, res) => {
   }
 };
 
-
 export const declineCounselor = async (req, res) => {
   const { counselorId } = req.body;
 
@@ -104,5 +103,3 @@ export const approveCounselor = async (req, res) => {
     res.status(500).json({ error: "Failed to approve counselor" });
   }
 };
-
-   
