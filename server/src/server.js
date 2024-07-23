@@ -9,6 +9,8 @@ import resourceRoutes from "./routes/resourceRoutes.js";
 import messageRoutes from "./routes/messageRoutes.js";
 import notificationRoutes from "./routes/notificationRoutes.js";
 
+import counselorRoutes from "./routes/counsellorRoutes.js";
+
 dotenv.config();
 
 const app = express();
@@ -27,6 +29,7 @@ app.use("/api/sessions", sessionRoutes);
 app.use("/api/resources", resourceRoutes);
 app.use("/api/messages", messageRoutes);
 app.use("/api/notifications", notificationRoutes);
+app.use("/api/counselors", counselorRoutes);
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
