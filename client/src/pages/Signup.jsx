@@ -8,7 +8,7 @@ const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
-  const [role, setRole] = useState("User");
+  const [role, setRole] = useState("USER");
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -63,8 +63,8 @@ const Signup = () => {
           onChange={(e) => setRole(e.target.value)}
           className="w-full p-2 border border-gray-300 rounded mb-4"
           required>
-          <option value="User">User</option>
-          <option value="Therapist">counsellor</option>
+          <option value="USER">User</option>
+          <option value="COUNSELOR">Counselor</option>
         </select>
         <button
           type="submit"

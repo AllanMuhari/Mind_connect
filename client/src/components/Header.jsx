@@ -21,10 +21,19 @@ const Header = () => {
         <span className="ml-2 text-black font-bold text-xl">MindConnect</span>
       </Link>
       <nav className="hidden lg:flex ml-auto gap-6">
-        <NavLink to="#">Find a Therapist</NavLink>
-        <NavLink to="#">Support Groups</NavLink>
-        <NavLink to="#">Resources</NavLink>
-        <NavLink to="#">About</NavLink>
+        <NavLink to="/">Home</NavLink>
+        {user?.role === "ADMIN" && (
+          <NavLink to="/approve-counsellors">Approve Counsellors</NavLink>
+        )}
+        {user?.role === "USER" && (
+          <NavLink to="/find-therapists">Find a Therapist</NavLink>
+        )}
+        {user?.role === "COUNSELOR" && (
+          <NavLink to="/register-counsellor">Register as a Counsellor</NavLink>
+        )}
+        <NavLink to="/support-groups">Support Groups</NavLink>
+        <NavLink to="/resources">Resources</NavLink>
+        <NavLink to="/about">About</NavLink>
       </nav>
       <div className="flex items-center gap-4">
         {isAuthenticated ? (
@@ -72,16 +81,31 @@ const Header = () => {
           as="div"
           className="absolute top-16 right-0 w-full bg-white shadow-lg lg:hidden">
           <div className="flex flex-col p-4">
-            <NavLink to="#" onClick={toggleMenu}>
-              Find a Therapist
+            <NavLink to="/" onClick={toggleMenu}>
+              Home
             </NavLink>
-            <NavLink to="#" onClick={toggleMenu}>
+            {user?.role === "ADMIN" && (
+              <NavLink to="/approve-counsellors" onClick={toggleMenu}>
+                Approve Counsellors
+              </NavLink>
+            )}
+            {user?.role === "USER" && (
+              <NavLink to="/find-therapists" onClick={toggleMenu}>
+                Find a Therapist
+              </NavLink>
+            )}
+            {user?.role === "COUNSELOR" && (
+              <NavLink to="/register-counsellor" onClick={toggleMenu}>
+                Register as a Counsellor
+              </NavLink>
+            )}
+            <NavLink to="/support-groups" onClick={toggleMenu}>
               Support Groups
             </NavLink>
-            <NavLink to="#" onClick={toggleMenu}>
+            <NavLink to="/resources" onClick={toggleMenu}>
               Resources
             </NavLink>
-            <NavLink to="#" onClick={toggleMenu}>
+            <NavLink to="/about" onClick={toggleMenu}>
               About
             </NavLink>
             {isAuthenticated ? (
