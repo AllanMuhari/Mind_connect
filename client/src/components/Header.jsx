@@ -103,7 +103,7 @@ const Header = () => {
               Support Groups
             </NavLink>
             <NavLink to="/resources" onClick={toggleMenu}>
-              Resources
+              Create Resources
             </NavLink>
             <NavLink to="/about" onClick={toggleMenu}>
               About

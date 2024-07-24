@@ -82,24 +82,23 @@ export const getPendingCounselors = async (req, res) => {
       where: { approved: false },
       include: { user: true },
     });
-    res.json(counselors);
+    res.status(200).json(counselors);
   } catch (error) {
     console.error("Error fetching pending counselors", error);
-    res.status(500).json({ error: "Failed to fetch pending counselors" });
+    res.status(500).json({ error: "Error fetching pending counselors" });
   }
 };
 
 export const approveCounselor = async (req, res) => {
-  const { counselorId } = req.params;
-
+  const { id } = req.params;
   try {
-    const updatedCounselor = await prisma.counselor.update({
-      where: { userId: counselorId },
+    const counselor = await prisma.counselor.update({
+      where: { id: id },
       data: { approved: true },
     });
-    res.status(200).json(updatedCounselor);
+    res.status(200).json(counselor);
   } catch (error) {
     console.error("Error approving counselor", error);
-    res.status(500).json({ error: "Failed to approve counselor" });
+    res.status(500).json({ error: "Error approving counselor" });
   }
 };
