@@ -20,7 +20,13 @@ const port = process.env.PORT;
 // app.get("/", (req, res) => {
 //   res.send("<h1>Hello Allan</h1>");
 // });
-app.use(cors());
+app.use(
+  cors({
+    credentials: true,
+    origin: ["http://localhost:5173"],
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
+  })
+);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use("/api/users", userRoutes);

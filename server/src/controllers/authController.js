@@ -85,12 +85,11 @@ export const loginUser = async (req, res) => {
       expiresIn: "1h",
     });
 
-    res.json({
+    res.cookie("access_token",token).json({
       id: user.id,
       email: user.email,
       role: user.role,
       username: user.username,
-      profileImage: user.profileImage,
       token,
     });
   } catch (error) {

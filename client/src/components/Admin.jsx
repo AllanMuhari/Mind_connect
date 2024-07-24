@@ -23,7 +23,9 @@ const Admin = () => {
 
   const approveCounselor = async (id) => {
     try {
-      await axios.put(`http://localhost:5000/api/counselors/approve/${id}`);
+      await axios.put(`http://localhost:5000/api/counselors/approve/${id}`, {
+        withCredentials: true,
+      });
       setCounselors(counselors.filter((counselor) => counselor.id !== id));
       toast.success("Counselor approved successfully!");
     } catch (error) {
